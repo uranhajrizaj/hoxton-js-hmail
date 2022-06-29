@@ -47,6 +47,30 @@ const state:State = {
   ]
 }
 let mainEl=document.querySelector('main');
+let  filterEl = document.querySelector<HTMLInputElement>('.filter-input')
+
+if(filterEl) filterEl.addEventListener('keyup',function(){
+  mainEl.textContent=''
+  renderFilteredEmails()
+})
+
+function filteremail(){
+  let filter = filterEl.value.toLowerCase()
+  //  let filteredEmail= state.emails.filter(email => email.from.toLowerCase().includes(filter)  || email.header.toLowerCase().includes(filter) || email.content.toLowerCase().includes(filter))
+  let filteredEmail= state.emails.filter(email => email.from.toLowerCase().includes(filter))
+   return filteredEmail
+  }
+
+  function renderFilteredEmails(){ 
+    for(let elmail of filteremail()){
+
+    if(filterEl.value === '') render()
+    else {
+       if(elmail.read === false ) unreadEmails(elmail)
+         else readEmails(elmail)
+    }
+   }
+  }
 
 function singleEmail(email:Email){
 
